@@ -1,27 +1,47 @@
-
 .serendipity-modal-container .modal {
-    padding: 0
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.serendipity-modal-container .modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1em;
+    background-color: var(--background-primary);
+    border-bottom: 1px solid var(--background-modifier-active-hover);
+}
+
+.serendipity-modal-container .modal-title {
+    display: flex;
+    justify-content: center;
+    color: var(--h1-color);
+    background-color: var(--background-primary);
+    border-bottom: 1px solid var(--background-modifier-active-hover);
 }
 
 .serendipity-modal-container .modal-content {
+    flex: 1;
+    overflow-y: auto;
     margin: 0;
-    padding: 1.5em;
+    padding: 0 1rem 1rem;
 }
 
 .serendipity-modal-container .modal-close-button {
     display: none;
 }
 
-.serendipity-modal-container .modal-header {
+.serendipity-modal-container .modal-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
     padding: 1em 0;
     background-color: var(--background-primary);
-    border-bottom: 1px solid var(--background-modifier-active-hover);
-    /* to ensure this sits over callouts */
-    z-index: 1000;
+}
 
+.serendipity-modal-container .modal-actions button {
+    cursor: pointer;
 }
