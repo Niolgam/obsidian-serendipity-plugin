@@ -101,28 +101,44 @@ class SerendipityModal extends Modal {
 
     async onOpen() {
         const { containerEl, contentEl } = this;
-        const fileContents = this.file instanceof TFile ? await this.app.vault.read(this.file): '';
 
-        containerEl.addClass('serendipity-modal-container');
-        const header = contentEl.createDiv({cls: 'modal-header'});
+		const fileContents =
+			this.file instanceof import_obsidian2.TFile
+				? await this.app.vault.read(this.file)
+				: "";
+		containerEl.addClass("serendipity-modal-container");
 
-        const openCta = new ButtonComponent(header)    
-        openCta.setButtonText('Open in vault')
-            .onClick(() => {
-                this.file instanceof TFile && this.app.workspace.getLeaf('tab').openFile(this.file);
-                this.close();
-            });
-        
-        const closeCta = new ButtonComponent(header)
-        closeCta.setButtonText('Close')
-            .onClick(() => {
-                this.close();
-            });
-        
-        const contentContainer = contentEl.createDiv({ cls: 'markdown-preview' });
+		const titleEl = containerEl.querySelector(".modal-title");
+		if (titleEl) {
+			titleEl.setText(
+				this.file?.name.replace(/\.[^/.]+$/, "") || "No Title"
+			);
+		}
 
-        this.component = new Component();
-        MarkdownRenderer.render(this.app, fileContents, contentContainer, this.file.path, this.component);
+		const headerEl = containerEl.querySelector(".modal-header");
+		const actionButton = headerEl.createDiv({ cls: "modal-actions" });
+
+		const openCta = new import_obsidian2.ButtonComponent(actionButton);
+		openCta.setButtonText("Open in vault").onClick(() => {
+			this.file instanceof import_obsidian2.TFile &&
+				this.app.workspace.getLeaf("tab").openFile(this.file);
+			this.close();
+		});
+		const closeCta = new import_obsidian2.ButtonComponent(actionButton);
+		closeCta.setButtonText("Close").onClick(() => {
+			this.close();
+		});
+		const contentContainer = contentEl.createDiv({
+			cls: "markdown-preview",
+		});
+		this.component = new import_obsidian2.Component();
+		import_obsidian2.MarkdownRenderer.render(
+			this.app,
+			fileContents,
+			contentContainer,
+			this.file.path,
+			this.component
+		);
     }
 
     onClose() {
